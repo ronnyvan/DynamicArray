@@ -1,0 +1,128 @@
+public class DynamicArray {
+    private Object[] array;
+    private int elementCount;
+
+    public DynamicArray(int size) {
+        array = new Object[size];
+        elementCount = 0;
+    }
+    //misc
+    public int trueLength() {
+        return array.length;
+    }
+
+    public Object[] copyArray(Object[] arr) {
+
+        Object[] copy = (elementCount < arr.length)
+                ? new Object[arr.length]
+                : new Object[arr.length * 2];
+
+        for (int i = 0; i < arr.length; i++) {
+            copy[i] = arr[i];
+        }
+        return copy;
+
+    }
+    //phase 1
+    public int size() {
+        return elementCount;
+    }
+
+    public boolean isEmpty() {
+        return (elementCount < 1);
+    }
+
+    public boolean add(Object elmt) {
+        Object[] newArray = copyArray(array);
+        newArray[elementCount] = elmt;
+        elementCount++;
+        array = newArray;
+        return true;
+    }
+
+    // phase 2
+    public void add(int index, Object elmt) {
+        if (index < 0 || index > elementCount) {
+            return;
+        }
+
+        Object[] newArray = copyArray(array);
+        for (int i = 0; i < array.length + 1; i++) {
+            if (i < index) {
+                newArray[i] = array[i];
+            } else if (i == index) {
+                newArray[i] = elmt;
+            } else
+                newArray[i] = array[i - 1];
+
+        }
+        elementCount++;
+        array = newArray;
+
+    }
+
+    public Object get(int index) {
+        if (index < 0 || index >= elementCount) {
+            return null;
+        }
+        return (array[index]);
+    }
+
+    public Object set(int index, Object elmt) {
+        if (index < 0 || index >= elementCount) {
+            return null;
+        }
+
+        Object oldElmt = array[index];
+        array[index] = elmt;
+        return oldElmt;
+    }
+
+    // phase 3
+    public Object remove(int index) {
+        Object oldElmt = array[index];
+
+        for (int i = index; i < elementCount; i++) {
+            array[i] = (i == array.length - 1)
+                    ? null
+                    : array[i + 1];
+
+        }
+
+        return oldElmt;
+    }
+
+    public boolean contains(Object elmt) {
+        for (Object o : array) {
+            if (elmt.equals(o))
+                return true;
+        }
+        return false;
+
+    }
+
+    // phase 4
+    public int indexOf(Object elmt) {
+
+        for (int i = 0; i < array.length; i++) {
+            if (elmt.equals(array[i])) {
+                return i;
+            }
+        }
+        return -1;
+
+    }
+
+    public String toString() {
+        if (elementCount == 0) {
+            return "[]";
+        }
+        String s = "";
+        for (Object o : array) {
+            s += o.toString() + " ";
+
+        }
+        String[] sFormatted = s.split(" ");
+        return "[" + String.join(", ", sFormatted) + "]";
+    }
+}
