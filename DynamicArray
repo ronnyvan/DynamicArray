@@ -50,6 +50,7 @@ public class DynamicArray {
 
         Object[] newArray = copyArray(array);
         for (int i = 0; i < elementCount + 1; i++) {
+            
             if (i < index) {
                 newArray[i] = array[i];
             } else if (i == index) {
@@ -120,13 +121,12 @@ public class DynamicArray {
         if (elementCount == 0) {
             return "[]";
         }
-
-        String s = "";
-        for (int i = 0; i < elementCount; i++) {
-            s += array[i].toString() + " ";
-
+        
+        String s = "["+array[0].toString()+", ";
+        for (int i = 1; i < elementCount-1; i++) {
+            s += array[i].toString() + ", ";
         }
-        String[] sFormatted = s.split(" ");
-        return "[" + String.join(", ", sFormatted) + "]";
+        s+=array[elementCount-1].toString();
+        return s+"]";
     }
 }
