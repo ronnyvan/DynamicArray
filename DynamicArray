@@ -7,6 +7,11 @@ public class DynamicArray {
         elementCount = 0;
     }
 
+    public DynamicArray() {
+        array = new Object[10];
+        elementCount = 0;
+    }
+
     // misc
     public int trueLength() {
         return array.length;
@@ -22,7 +27,6 @@ public class DynamicArray {
             copy[i] = arr[i];
         }
         return copy;
-
     }
 
     // phase 1
@@ -50,18 +54,13 @@ public class DynamicArray {
 
         Object[] newArray = copyArray(array);
         for (int i = 0; i < elementCount + 1; i++) {
-            
-            if (i < index) {
-                newArray[i] = array[i];
-            } else if (i == index) {
-                newArray[i] = elmt;
-            } else
-                newArray[i] = array[i - 1];
-
+            newArray[i] = (i < index) ? array[i] 
+            :   ((i == index)
+                ? elmt
+                : array[i - 1])
         }
         elementCount++;
         array = newArray;
-
     }
 
     public Object get(int index) {
@@ -89,7 +88,6 @@ public class DynamicArray {
             array[i] = (i == array.length - 1)
                     ? null
                     : array[i + 1];
-
         }
         elementCount--;
         return oldElmt;
@@ -101,7 +99,6 @@ public class DynamicArray {
                 return true;
         }
         return false;
-
     }
 
     // phase 4
@@ -114,19 +111,19 @@ public class DynamicArray {
             }
         }
         return -1;
-
     }
 
     public String toString() {
         if (elementCount == 0) {
             return "[]";
         }
-        
-        String s = "["+array[0].toString()+", ";
-        for (int i = 1; i < elementCount-1; i++) {
-            s += array[i].toString() + ", ";
+
+        String stringFormatted = "[" + array[0].toString() + ", ";
+        for (int i = 1; i < elementCount - 1; i++) {
+            stringFormatted += array[i].toString() + ", ";
         }
-        s+=array[elementCount-1].toString();
-        return s+"]";
+
+        stringFormatted += array[elementCount - 1].toString() + "]";
+        return stringFormatted;
     }
 }
